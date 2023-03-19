@@ -14,8 +14,7 @@ import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.tronina.dashbord.statemachine.Transitions;
-import com.tronina.dashbord.statemachine.States;
+import com.tronina.dashbord.entity.Transitions;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

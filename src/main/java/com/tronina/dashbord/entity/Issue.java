@@ -14,7 +14,7 @@ public class Issue {
 
         private Employee executor;
 
-        private Relese project;
+        private Release project;
 
         private States state;
 }

@@ -1,7 +1,7 @@
 package com.tronina.dashbord.config;
 
-import com.tronina.dashbord.statemachine.States;
-import com.tronina.dashbord.statemachine.Transitions;
+import com.tronina.dashbord.entity.States;
+import com.tronina.dashbord.entity.Transitions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
@@ -23,12 +23,12 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     @Override
     public void configure(StateMachineConfigurationConfigurer<States, Transitions> config) throws Exception {
         config.withConfiguration()
-            .listener(listener())
-            .autoStartup(true);
+                .listener(listener())
+                .autoStartup(true);
     }
 
     private StateMachineListener<States, Transitions> listener() {
-        return new StateMachineListenerAdapter<States, Transitions>() {
+        return new StateMachineListenerAdapter<>() {
             @Override
             public void eventNotAccepted(Message<Transitions> event) {
                 log.error("Not accepted event: {}", event);
@@ -44,26 +44,26 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     }
 
     @Override
-    public void configure(StateMachineStateConfigurer<States, Transitions> states) throws Exception{
+    public void configure(StateMachineStateConfigurer<States, Transitions> states) throws Exception {
         states.withStates()
-            .initial(States.BACKLOG)
-            .state(States.IN_PROGRESS)
-            .end(States.DONE);
+                .initial(States.BACKLOG)
+                .state(States.IN_PROGRESS)
+                .end(States.DONE);
     }
 
     @Override
-    public void configure(StateMachineTransitionConfigurer<States, Transitions> transition) throws Exception{
+    public void configure(StateMachineTransitionConfigurer<States, Transitions> transition) throws Exception {
         transition.withExternal()
-            .source(States.BACKLOG)
-            .target(States.IN_PROGRESS)
-            .event(Transitions.START_TASK)
-            .guard(checkProjectHasStarted())
+                .source(States.BACKLOG)
+                .target(States.IN_PROGRESS)
+                .event(Transitions.START_TASK)
+                .guard(checkProjectHasStarted())
 
-            .and()
-            .withExternal()
-            .source(States.IN_PROGRESS)
-            .target(States.DONE)
-            .event(Transitions.FINISH_TASK)
+                .and()
+                .withExternal()
+                .source(States.IN_PROGRESS)
+                .target(States.DONE)
+                .event(Transitions.FINISH_TASK)
         ;
 
     }
@@ -71,8 +71,8 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     private Guard<States, Transitions> checkProjectHasStarted() {
         return stateContext -> {
             Boolean flag = (Boolean) stateContext.getExtendedState()
-                                                .getVariables()
-                                                .get("deployed");
+                    .getVariables()
+                    .get("deployed");
             return flag == null ? false : flag;
         };
     }
@@ -81,8 +81,8 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
         return stateContext -> {
             log.warn("DEPLOYING: {}", stateContext.getEvent());
             stateContext.getExtendedState()
-                        .getVariables()
-                        .put("deployed", true);
+                    .getVariables()
+                    .put("deployed", true);
         };
     }
 

@@ -1,4 +1,4 @@
-package com.tronina.dashbord.statemachine;
+package com.tronina.dashbord.entity;
 
 public enum Transitions {
     START_TASK,

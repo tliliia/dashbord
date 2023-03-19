@@ -3,8 +3,8 @@ package com.tronina.dashbord.service.StateMachineServiceImpl;
 import java.util.HashMap;
 import java.util.UUID;
 
-import com.tronina.dashbord.statemachine.Transitions;
-import com.tronina.dashbord.statemachine.States;
+import com.tronina.dashbord.entity.Transitions;
+import com.tronina.dashbord.entity.States;
 import org.springframework.statemachine.StateMachineContext;
 import org.springframework.statemachine.StateMachinePersist;
 
